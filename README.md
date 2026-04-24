@@ -1,9 +1,7 @@
 # IITG.ai_Recruitment
 
 ## Interpretation and Reporting
-
 ### Missing data and anomaly handling
-
 First, I cleaned the PGCB demand data so it could be used as a proper time-series dataset. The `datetime` column was converted into actual datetime format, then the rows were sorted by time. I also removed duplicate timestamps because having more than one value for the same hour could confuse the model.
 
 Some columns had mixed or non-numeric values, so I kept only the numeric columns. After that, the data was resampled into hourly intervals. For missing hourly values, I used nearest interpolation, which basically fills the missing hour using the closest available value.
@@ -15,7 +13,6 @@ For outliers in demand, I used the IQR method. Any `demand_mw` value that was to
 After cleaning, remaining missing values were filled with `0`. This is not perfect, but it keeps the dataset usable and avoids errors during merging and modelling.
 
 ### Temporal and external features engineered
-
 Since electricity demand changes a lot depending on time, I created several time-based features. These included the hour of the day, day of the week, month, quarter, whether the day was a weekend, and whether the hour was during night time.
 
 I also created sine and cosine versions of hour and month. This was done because time works in cycles. For example, 11 PM and 12 AM are close in real life, but simple numbers make them look far apart. The sine and cosine features help the model understand this circular pattern better.
@@ -27,7 +24,6 @@ Rolling average and rolling standard deviation features were also created. These
 Weather data was merged with the demand data using the nearest timestamp within 30 minutes. Economic indicators were merged by year, such as GDP, population, electricity access, energy use, CPI, and industry-related values. These were added to give the model some wider external context.
 
 ### Key insights from feature importance
-
 From the feature importance plot, `generation_mw` was the most important feature. This is reasonable because electricity generation and electricity demand are closely related in the power system.
 
 The next most important features were mostly lag features, such as previous demand from 1 hour ago, 2 hours ago, 3 hours ago, 24 hours ago, and 48 hours ago. This shows that the model depends heavily on past demand values. In simple terms, recent demand is one of the best clues for predicting the next hour’s demand.
