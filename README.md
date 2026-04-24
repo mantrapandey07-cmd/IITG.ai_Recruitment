@@ -14,8 +14,6 @@ For outliers in demand, I used the IQR method. Any `demand_mw` value that was to
 
 After cleaning, remaining missing values were filled with `0`. This is not perfect, but it keeps the dataset usable and avoids errors during merging and modelling.
 
----
-
 ### Temporal and external features engineered
 
 Since electricity demand changes a lot depending on time, I created several time-based features. These included the hour of the day, day of the week, month, quarter, whether the day was a weekend, and whether the hour was during night time.
@@ -27,8 +25,6 @@ Lag features were also added using previous demand values. For example, the mode
 Rolling average and rolling standard deviation features were also created. These help the model understand the recent trend in demand, not just one previous value. For example, a rolling average can show whether demand has generally been rising or falling over the last few hours.
 
 Weather data was merged with the demand data using the nearest timestamp within 30 minutes. Economic indicators were merged by year, such as GDP, population, electricity access, energy use, CPI, and industry-related values. These were added to give the model some wider external context.
-
----
 
 ### Key insights from feature importance
 
